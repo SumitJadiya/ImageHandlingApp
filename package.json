@@ -1,0 +1,29 @@
+{
+  "name": "imagehandlingapp",
+  "description": "App to handle forms and images using express and EJS. The images are stored in cloudinary.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SumitJadiya/ImageHandlingApp.git"
+  },
+  "dependencies": {
+    "cloudinary": "^1.27.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SumitJadiya/ImageHandlingApp/issues"
+  },
+  "homepage": "https://github.com/SumitJadiya/ImageHandlingApp#readme"
+}
