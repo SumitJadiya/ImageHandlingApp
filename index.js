@@ -15,17 +15,14 @@ app.use(express.json())
 app.use(urlencoded({extended: true}))
 
 app.get('/myget', (req, res) => {
-    
     res.send(req.body)
 })
 
 app.get('/mygetform', (req, res) => {
-    
     res.render("getform")
 })
 
 app.get('/mypostform', (req, res) => {
-    
     res.render("postForm")
 })
 
