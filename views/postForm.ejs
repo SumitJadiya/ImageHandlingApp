@@ -14,19 +14,34 @@
   <body class="bg-dark text-white">
     <div class="container mt-4 col-4 col-offset-6">
       <h1 class="display-3">Post Form</h1>
-      <form>
+      <form method="POST" action="mypost" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="firstName" class="form-label"> FirstName </label>
           <input
             type="text"
             class="form-control"
             id="firstName"
+            name="firstName"
             aria-describedby="emailHelp"
           />
         </div>
         <div class="mb-3">
           <label for="lastname" class="form-label"> LastName </label>
-          <input type="text" class="form-control" id="lastname" />
+          <input
+            type="text"
+            class="form-control"
+            id="lastname"
+            name="lastname"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="sampleFile" class="form-label"> sampleFile </label>
+          <input
+            type="file"
+            class="form-control"
+            name="sampleFile"
+            id="sampleFile"
+          />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
