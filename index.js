@@ -1,39 +1,90 @@
-const { urlencoded } = require('express')
-const express = require('express')
-const fileUpload = require('express-fileupload')
+const express = require("express");
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+const app = express();
 
-const app = express()
+cloudinary.config({
+  // cloud_name: processs.env.CLOUD_NAME
+  cloud_name: "stj11bitd",
+  api_key: "512651587261548",
+  api_secret: "M9VTjZCNGkmEfdDK8ZtPMU8Dl1c",
+});
 
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
 
-// middleware
-// to accept json data
-app.use(express.json())
-app.use(fileUpload({
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  fileUpload({
     useTempFiles: true,
-    tempFileDir: "/tmp/"
-}))
+    tempFileDir: "/tmp/",
+  })
+);
 
-// to accept url encoded data
-app.use(urlencoded({extended: true}))
+app.get("/", (req, res) => {
+  res.send("<h1>Hello from LCO</h1>");
+});
 
-app.get('/myget', (req, res) => {
-    // console.log(req.files)
-    res.send(req.body)
-})
+app.get("/myget", (req, res) => {
+  console.log(req.body);
 
-app.post('/mypost', (req, res) => {
-    console.log(req.files)
-    res.send(req.body)
-})
+  res.send(req.body);
+});
 
-// render
-app.get('/mygetform', (req, res) => {
-    res.render("getform")
-})
+app.post("/mypost", async (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
 
-app.get('/mypostform', (req, res) => {
-    res.render("postform")
-})
+  let result;
+  let imageArray = [];
 
-app.listen(4000, () => console.log(`Server running at 4000`))
+  // case - multiple images
+  /*
+  if (req.files) {
+    for (let index = 0; index < req.files.samplefile.length; index++) {
+      let result = await cloudinary.uploader.upload(
+        req.files.samplefile[index].tempFilePath,
+        {
+          folder: "users"
+        }
+      );
+
+      imageArray.push({
+        public_id: result.public_id,
+        secure_url: result.secure_url
+      });
+    }
+  }
+*/
+  // ### use case for single image
+  let file = req.files.samplefile;
+  await cloudinary.uploader
+    .upload(file.tempFilePath, {
+      folder: "users",
+    })
+    .then((res) => (result = res))
+    .catch((err) => console.log(err));
+
+  console.log(result);
+
+  let details = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    result,
+    imageArray,
+  };
+  console.log(details);
+
+  res.send(details);
+});
+
+// just to render the forms
+app.get("/mygetform", (req, res) => {
+  res.render("getform");
+});
+app.get("/mypostform", (req, res) => {
+  res.render("postform");
+});
+
+app.listen(4000, () => console.log(`Server is runnning at port 4000`));
